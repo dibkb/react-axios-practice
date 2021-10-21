@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import axios from "axios";
+import { apiKEY } from "./api/apiKey";
+import api from './api/userAPI'
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const search = 'batman'
+      const response = await api.get(`?s=${search}&apikey=${apiKEY}`);
+      console.log(response.data);
+      setUser(response.data)
+    };
+    fetchUser();
+  }, []);
+
+  return <div>{JSON.stringify(user.Search)}</div>;
 }
 
 export default App;
